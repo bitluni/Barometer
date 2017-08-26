@@ -1,0 +1,8 @@
+This is the code to my Barometer project.
+Check it out on youtube:
+..link coming soon..
+
+Licensed under Creative Commons cc-by
+You can use it even for commercial products. But you have to attribute me:
+bitluni
+https://youtube.com/bitlunislab
