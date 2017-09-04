@@ -12,7 +12,7 @@
 void MQTT_connect();
 
 /************************* SETUP *********************************/
-const bool LOGGING = true;
+const bool LOGGING = false;
 
 const bool useImperial = false;
 
