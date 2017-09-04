@@ -12,6 +12,8 @@
 void MQTT_connect();
 
 /************************* SETUP *********************************/
+const bool LOGGING = true;
+
 const bool useImperial = false;
 
 const char* wifiSSID = "";
@@ -43,7 +45,7 @@ Adafruit_BMP085 bmp;
 int SCREEN_WIDTH = oled.getLCDWidth();
 int SCREEN_HEIGHT = oled.getLCDHeight();
 
-bool wifiTimeOut = false;
+bool wifiTimeOut = true;
 
 float metersToFeet(float meters)
 {
@@ -58,13 +60,16 @@ float celsiusToFahrenheit(float celsius)
 void setup()
 {
   Serial.begin(115200);
-  WiFiMulti.addAP(wifiSSID, wifiPassword);
-  WiFiMulti.addAP("mymobilehotspot", "password1");
+  if(LOGGING)
+    WiFiMulti.addAP(wifiSSID, wifiPassword);
   bmp.begin();
   oled.begin();
   oled.clear(PAGE);
   oled.println("Connecting");
   oled.display();
+  if(!LOGGING)
+    return;
+  wifiTimeOut = false;
   for(int i = 0; i < connectionRetrys; i++)
   {
     if(WiFiMulti.run() == WL_CONNECTED) return;
@@ -77,9 +82,9 @@ void setup()
 
 void loop()
 {
-  float t =  bmp.readTemperature();
+  float t = bmp.readTemperature();
   if(useImperial)
-    t = celsiusToFahrenheit(bmp.readTemperature());
+    t = celsiusToFahrenheit(t);
   float p = bmp.readPressure();
   float a = bmp.readAltitude();
   if(useImperial) 
